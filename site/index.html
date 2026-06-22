@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Momentum Trading Agent</title>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="app-header">
+      <div>
+        <p class="eyebrow">Momentum Trading Agent</p>
+        <h1>Daily Momentum Dashboard</h1>
+      </div>
+      <div class="timestamp" id="timestamp">Loading...</div>
+    </header>
+
+    <section class="toolbar" aria-label="Latest report context">
+      <div class="latest-context" id="latestContext">Loading latest update...</div>
+    </section>
+
+    <nav class="view-switch" aria-label="Dashboard views">
+      <button class="active" type="button" data-view="chartBoardView">Chart Board</button>
+      <button type="button" data-view="homeView">Report</button>
+    </nav>
+
+    <div class="view" id="homeView" hidden>
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Core Attention</h2>
+        </div>
+        <ul class="attention-list" id="coreAttention"></ul>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Classification</h2>
+        </div>
+        <div class="classification-grid" id="classificationGrid"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Focus Stocks</h2>
+        </div>
+        <div class="focus-grid" id="focusGrid"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Report Assistant</h2>
+        </div>
+        <div class="chat-log" id="chatLog"></div>
+        <form class="chat-form" id="chatForm">
+          <input id="chatInput" type="text" autocomplete="off" placeholder="Ask about today's focus, INTC, breakout watch...">
+          <button type="submit">Ask</button>
+        </form>
+      </section>
+    </div>
+
+    <div class="view chart-board" id="chartBoardView">
+      <section class="panel">
+        <div class="panel-head chart-head">
+          <div>
+            <h2>Trend Chart Board</h2>
+            <p>MA5 &gt; MA10 &gt; MA20 &gt; MA30 &gt; MA60; EXPMA layer preserved, pivot/VCP metrics below each chart.</p>
+          </div>
+          <div class="chart-tools">
+            <input id="boardSearch" type="search" placeholder="Search ticker..." aria-label="Search ticker">
+            <label>Min days</label>
+            <select id="minDaysFilter" aria-label="Minimum expansion days">
+              <option value="0">All</option>
+              <option value="3">≥ 3d</option>
+              <option value="5">≥ 5d</option>
+              <option value="10">≥ 10d</option>
+              <option value="20">≥ 20d</option>
+            </select>
+            <button class="sort-btn active" id="btnSortDays" type="button">Days↓</button>
+            <button class="sort-btn" id="btnSortPivot" type="button">Pivot↓</button>
+            <button class="sort-btn" id="btnOnlyConfirmed" type="button">Trend Pass</button>
+            <div class="count-badge">Show <span id="countDisplay">0</span></div>
+          </div>
+        </div>
+        <div class="watchlist-grid" id="watchlistGrid"></div>
+      </section>
+    </div>
+  </main>
+  <script src="app.js"></script>
+  <script src="extras.js"></script>
+</body>
+</html>
