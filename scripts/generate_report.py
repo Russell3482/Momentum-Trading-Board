@@ -69,10 +69,16 @@ class Analysis:
     ma_expansion_state: str
     ma_expansion_start_date: str
     ma_expansion_age: int
+    ma_break_state: str
+    ma_break_reason: str
+    ma_break_date: str
     expma_state: str
     expma_spread_pct: float | None
     expma_stack_age: int
     expma_start_date: str
+    expma_break_state: str
+    expma_break_reason: str
+    expma_break_date: str
     gain_expma_to_ma_pct: float | None
     gain_ma_to_now_pct: float | None
     gain_expma_to_now_pct: float | None
@@ -290,6 +296,42 @@ def ma_expansion_lifecycle(df: pd.DataFrame) -> tuple[str, str, int]:
     return ("MA Bullish Expansion" if age > 0 else "MA Not Expanded"), stacked_start_date(df, age), age
 
 
+def stack_break_reason(values: list[tuple[str, float | None]]) -> str:
+    for (left_label, left_value), (right_label, right_value) in zip(values, values[1:]):
+        if left_value is None or right_value is None:
+            return "Data Missing"
+        if left_value <= right_value:
+            return f"{left_label} <= {right_label}"
+    return "Stack intact"
+
+
+def ma_expansion_break(df: pd.DataFrame) -> tuple[str, str, str]:
+    if len(df) < 61:
+        return "Data Missing", "Data Missing", ""
+    ma5 = rolling_ma_series(df, 5)
+    ma10 = rolling_ma_series(df, 10)
+    ma20 = rolling_ma_series(df, 20)
+    ma30 = rolling_ma_series(df, 30)
+    ma60 = rolling_ma_series(df, 60)
+    stack = (ma5 > ma10) & (ma10 > ma20) & (ma20 > ma30) & (ma30 > ma60)
+    current = bool(stack.iloc[-1])
+    previous = bool(stack.iloc[-2])
+    reason = stack_break_reason(
+        [
+            ("MA5", safe_float(ma5.iloc[-1])),
+            ("MA10", safe_float(ma10.iloc[-1])),
+            ("MA20", safe_float(ma20.iloc[-1])),
+            ("MA30", safe_float(ma30.iloc[-1])),
+            ("MA60", safe_float(ma60.iloc[-1])),
+        ]
+    )
+    if previous and not current:
+        return "New Break", reason, str(df.index[-1].date())
+    if current:
+        return "Intact", "Stack intact", ""
+    return "Not Expanded", reason, ""
+
+
 def expma_lifecycle(df: pd.DataFrame) -> tuple[str, float | None, int, str]:
     if len(df) < 60:
         return "Data Missing", None, 0, ""
@@ -313,6 +355,33 @@ def expma_lifecycle(df: pd.DataFrame) -> tuple[str, float | None, int, str]:
     if age > 0:
         return "EXPMA Pullback Watch", spread, age, start_date
     return "EXPMA Not Expanded", spread, age, start_date
+
+
+def expma_expansion_break(df: pd.DataFrame) -> tuple[str, str, str]:
+    if len(df) < 61:
+        return "Data Missing", "Data Missing", ""
+    ema5 = df["Close"].ewm(span=5, adjust=False).mean()
+    ema10 = df["Close"].ewm(span=10, adjust=False).mean()
+    ema20 = df["Close"].ewm(span=20, adjust=False).mean()
+    ema30 = df["Close"].ewm(span=30, adjust=False).mean()
+    ema60 = df["Close"].ewm(span=60, adjust=False).mean()
+    stack = (ema5 > ema10) & (ema10 > ema20) & (ema20 > ema30) & (ema30 > ema60)
+    current = bool(stack.iloc[-1])
+    previous = bool(stack.iloc[-2])
+    reason = stack_break_reason(
+        [
+            ("EMA5", safe_float(ema5.iloc[-1])),
+            ("EMA10", safe_float(ema10.iloc[-1])),
+            ("EMA20", safe_float(ema20.iloc[-1])),
+            ("EMA30", safe_float(ema30.iloc[-1])),
+            ("EMA60", safe_float(ema60.iloc[-1])),
+        ]
+    )
+    if previous and not current:
+        return "New Break", reason, str(df.index[-1].date())
+    if current:
+        return "Intact", "Stack intact", ""
+    return "Not Expanded", reason, ""
 
 
 def trend_lifecycle(df: pd.DataFrame, high_52w: float | None) -> tuple[bool, int, str, int, int]:
@@ -790,6 +859,19 @@ def core_attention(analyses: list[Analysis], raw_history: dict[str, pd.DataFrame
     if constructive:
         names = ", ".join(f"{item.ticker} {item.trend_phase}" for item in constructive[:4])
         lines.append(f"- Constructive bases: {names}. Need tighter action or a cleaner trigger.")
+    new_ma_breaks = [
+        item
+        for item in analyses
+        if item.ma_break_state == "New Break" or item.expma_break_state == "New Break"
+    ]
+    if new_ma_breaks:
+        names = "; ".join(
+            f"{item.ticker} MA {item.ma_break_state} {item.ma_break_reason}"
+            if item.ma_break_state == "New Break"
+            else f"{item.ticker} EMA {item.expma_break_state} {item.expma_break_reason}"
+            for item in new_ma_breaks[:6]
+        )
+        lines.append(f"- New expansion breaks: {names}. Treat as a fresh repair alert, not a normal pullback.")
     strong_gap = [
         item
         for item in analyses
@@ -851,10 +933,16 @@ def analyze_ticker(
             ma_expansion_state="Data Missing",
             ma_expansion_start_date="",
             ma_expansion_age=0,
+            ma_break_state="Data Missing",
+            ma_break_reason="Data Missing",
+            ma_break_date="",
             expma_state="Data Missing",
             expma_spread_pct=None,
             expma_stack_age=0,
             expma_start_date="",
+            expma_break_state="Data Missing",
+            expma_break_reason="Data Missing",
+            expma_break_date="",
             gain_expma_to_ma_pct=None,
             gain_ma_to_now_pct=None,
             gain_expma_to_now_pct=None,
@@ -906,7 +994,9 @@ def analyze_ticker(
     trend_gate, trend_age, phase, days_above_50, ma_stack = trend_lifecycle(df, high_52w)
     short_state, short_spread = short_ma_state(price, ma5, ma10, ma20)
     ma_expansion_state_value, ma_expansion_start, ma_expansion_age = ma_expansion_lifecycle(df)
+    ma_break_state, ma_break_reason, ma_break_date = ma_expansion_break(df)
     expma_state_value, expma_spread, expma_age, expma_start = expma_lifecycle(df)
+    expma_break_state, expma_break_reason, expma_break_date = expma_expansion_break(df)
     gain_expma_to_ma = pct_gain_between(df, expma_start, ma_expansion_start) if expma_start and ma_expansion_start else None
     gain_ma_to_now = pct_gain_between(df, ma_expansion_start)
     gain_expma_to_now = pct_gain_between(df, expma_start)
@@ -937,8 +1027,12 @@ def analyze_ticker(
     comment_parts.append("Trend gate pass" if trend_gate else "Trend gate fail")
     comment_parts.append(phase)
     comment_parts.append(f"MA {ma_expansion_state_value}")
+    if ma_break_state == "New Break":
+        comment_parts.append(f"MA break {ma_break_reason}")
     comment_parts.append(f"short MA {short_state}")
     comment_parts.append(f"EXPMA {expma_state_value}")
+    if expma_break_state == "New Break":
+        comment_parts.append(f"EXPMA break {expma_break_reason}")
     if pivot is not None and price is not None:
         comment_parts.append(f"{((price / pivot) - 1) * 100:.1f}% vs pivot")
     comment_parts.append(f"pullbacks {contraction['sequence']}")
@@ -977,10 +1071,16 @@ def analyze_ticker(
         ma_expansion_state=ma_expansion_state_value,
         ma_expansion_start_date=ma_expansion_start,
         ma_expansion_age=ma_expansion_age,
+        ma_break_state=ma_break_state,
+        ma_break_reason=ma_break_reason,
+        ma_break_date=ma_break_date,
         expma_state=expma_state_value,
         expma_spread_pct=expma_spread,
         expma_stack_age=expma_age,
         expma_start_date=expma_start,
+        expma_break_state=expma_break_state,
+        expma_break_reason=expma_break_reason,
+        expma_break_date=expma_break_date,
         gain_expma_to_ma_pct=gain_expma_to_ma,
         gain_ma_to_now_pct=gain_ma_to_now,
         gain_expma_to_now_pct=gain_expma_to_now,
@@ -1124,10 +1224,16 @@ def build_report(mode: str) -> Path:
                 f"- MA Expansion State: {item.ma_expansion_state}",
                 f"- MA Expansion Start: {item.ma_expansion_start_date or 'Data Missing'}",
                 f"- MA Expansion Age: {item.ma_expansion_age}",
+                f"- MA Expansion Break: {item.ma_break_state}",
+                f"- MA Break Reason: {item.ma_break_reason}",
+                f"- MA Break Date: {item.ma_break_date or 'Data Missing'}",
                 f"- EXPMA State: {item.expma_state}",
                 f"- EXPMA Spread: {fmt_pct(item.expma_spread_pct)}",
                 f"- EXPMA Stack Age: {item.expma_stack_age}",
                 f"- EXPMA Start: {item.expma_start_date or 'Data Missing'}",
+                f"- EXPMA Expansion Break: {item.expma_break_state}",
+                f"- EXPMA Break Reason: {item.expma_break_reason}",
+                f"- EXPMA Break Date: {item.expma_break_date or 'Data Missing'}",
                 f"- Gain EXPMA to MA: {fmt_pct(item.gain_expma_to_ma_pct)}",
                 f"- Gain MA to Now: {fmt_pct(item.gain_ma_to_now_pct)}",
                 f"- Gain EXPMA to Now: {fmt_pct(item.gain_expma_to_now_pct)}",

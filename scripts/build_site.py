@@ -152,10 +152,16 @@ def load_report(snapshot_path: Path) -> dict:
         enriched["ma_expansion_state"] = score.get("ma_expansion_state", "Data Missing")
         enriched["ma_expansion_start_date"] = score.get("ma_expansion_start_date", "")
         enriched["ma_expansion_age"] = score.get("ma_expansion_age", score.get("trend_age", 0))
+        enriched["ma_break_state"] = score.get("ma_break_state", "Data Missing")
+        enriched["ma_break_reason"] = score.get("ma_break_reason", "Data Missing")
+        enriched["ma_break_date"] = score.get("ma_break_date", "")
         enriched["expma_state"] = score.get("expma_state", "Data Missing")
         enriched["expma_spread_pct"] = as_percent(score.get("expma_spread_pct"))
         enriched["expma_stack_age"] = score.get("expma_stack_age", 0)
         enriched["expma_start_date"] = score.get("expma_start_date", "")
+        enriched["expma_break_state"] = score.get("expma_break_state", "Data Missing")
+        enriched["expma_break_reason"] = score.get("expma_break_reason", "Data Missing")
+        enriched["expma_break_date"] = score.get("expma_break_date", "")
         enriched["gain_expma_to_ma_pct"] = as_percent(score.get("gain_expma_to_ma_pct"))
         enriched["gain_ma_to_now_pct"] = as_percent(score.get("gain_ma_to_now_pct"))
         enriched["gain_expma_to_now_pct"] = as_percent(score.get("gain_expma_to_now_pct"))
@@ -1476,6 +1482,8 @@ function renderFocus(report) {
 
 const toneFor = (value = "") => {
   const text = String(value).toLowerCase();
+  if (text === "intact" || text.includes("stack intact")) return "positive";
+  if (text.includes("not expanded")) return "warning";
   if (text.includes("pass") || text.includes("bullish") || text.includes("confirmed") || text.includes("expansion")) return "positive";
   if (text.includes("watch") || text.includes("neutral") || text.includes("entangled")) return "warning";
   if (text.includes("fail") || text.includes("repair") || text.includes("weak") || text.includes("break")) return "danger";
@@ -1584,8 +1592,12 @@ function renderWatchlist(report) {
         <div class="metric-box ${toneFor(item.trend_signal)}"><span>Trend</span><b>${item.trend_signal}</b></div>
         <div class="metric-box ${toneFor(item.expma_state)}"><span>EMA Expansion</span><b>${item.expma_state}</b></div>
         <div class="metric-box"><span>EXPMA Days</span><b>${item.expma_stack_age}d</b></div>
+        <div class="metric-box ${toneFor(item.expma_break_state)}"><span>EMA Break</span><b>${item.expma_break_state}${item.expma_break_date ? ` ${item.expma_break_date}` : ""}</b></div>
+        <div class="metric-box wide ${toneFor(item.expma_break_state)}"><span>EMA Break Reason</span><b>${item.expma_break_reason}</b></div>
         <div class="metric-box ${toneFor(item.ma_expansion_state)}"><span>MA Expansion</span><b>${item.ma_expansion_state}</b></div>
         <div class="metric-box"><span>MA Days</span><b>${item.ma_expansion_age || 0}d</b></div>
+        <div class="metric-box ${toneFor(item.ma_break_state)}"><span>MA Break</span><b>${item.ma_break_state}${item.ma_break_date ? ` ${item.ma_break_date}` : ""}</b></div>
+        <div class="metric-box wide ${toneFor(item.ma_break_state)}"><span>MA Break Reason</span><b>${item.ma_break_reason}</b></div>
         <div class="metric-box hot-cell"><span>Pivot</span><b>${item.pivot_fmt}</b></div>
         <div class="metric-box danger-cell"><span>Support</span><b>${item.support_fmt}</b></div>
         <div class="metric-box wide"><span>Support Basis</span><b>${item.support_basis}</b></div>

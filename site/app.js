@@ -132,6 +132,8 @@ function renderFocus(report) {
 
 const toneFor = (value = "") => {
   const text = String(value).toLowerCase();
+  if (text === "intact" || text.includes("stack intact")) return "positive";
+  if (text.includes("not expanded")) return "warning";
   if (text.includes("pass") || text.includes("bullish") || text.includes("confirmed") || text.includes("expansion")) return "positive";
   if (text.includes("watch") || text.includes("neutral") || text.includes("entangled")) return "warning";
   if (text.includes("fail") || text.includes("repair") || text.includes("weak") || text.includes("break")) return "danger";
@@ -240,8 +242,12 @@ function renderWatchlist(report) {
         <div class="metric-box ${toneFor(item.trend_signal)}"><span>Trend</span><b>${item.trend_signal}</b></div>
         <div class="metric-box ${toneFor(item.expma_state)}"><span>EMA Expansion</span><b>${item.expma_state}</b></div>
         <div class="metric-box"><span>EXPMA Days</span><b>${item.expma_stack_age}d</b></div>
+        <div class="metric-box ${toneFor(item.expma_break_state)}"><span>EMA Break</span><b>${item.expma_break_state}${item.expma_break_date ? ` ${item.expma_break_date}` : ""}</b></div>
+        <div class="metric-box wide ${toneFor(item.expma_break_state)}"><span>EMA Break Reason</span><b>${item.expma_break_reason}</b></div>
         <div class="metric-box ${toneFor(item.ma_expansion_state)}"><span>MA Expansion</span><b>${item.ma_expansion_state}</b></div>
         <div class="metric-box"><span>MA Days</span><b>${item.ma_expansion_age || 0}d</b></div>
+        <div class="metric-box ${toneFor(item.ma_break_state)}"><span>MA Break</span><b>${item.ma_break_state}${item.ma_break_date ? ` ${item.ma_break_date}` : ""}</b></div>
+        <div class="metric-box wide ${toneFor(item.ma_break_state)}"><span>MA Break Reason</span><b>${item.ma_break_reason}</b></div>
         <div class="metric-box hot-cell"><span>Pivot</span><b>${item.pivot_fmt}</b></div>
         <div class="metric-box danger-cell"><span>Support</span><b>${item.support_fmt}</b></div>
         <div class="metric-box wide"><span>Support Basis</span><b>${item.support_basis}</b></div>
