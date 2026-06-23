@@ -19,6 +19,8 @@ on:
 
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
 concurrency:
   group: scheduled-data-update
@@ -26,6 +28,9 @@ concurrency:
 
 jobs:
   update:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -60,6 +65,9 @@ jobs:
       - name: Build site
         run: python scripts/build_site.py
 
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
       - name: Commit generated data
         shell: bash
         run: |
@@ -72,3 +80,12 @@ jobs:
             git commit -m "Update ${{ steps.mode.outputs.mode }} data"
             git push
           fi
+
+      - name: Upload site artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
