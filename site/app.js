@@ -1,3 +1,7 @@
+const DATA_VERSION = "20260624090951";
+
+const dataUrl = (path) => `${path}?v=${DATA_VERSION}`;
+
 const state = {
   reports: [],
   activeId: "",
@@ -281,7 +285,7 @@ function render() {
 }
 
 async function boot() {
-  const response = await fetch("data/reports.json");
+  const response = await fetch(dataUrl("data/reports.json"), { cache: "no-store" });
   const payload = await response.json();
   state.reports = payload.reports.sort((a, b) => b.id.localeCompare(a.id));
   setInitialReport();

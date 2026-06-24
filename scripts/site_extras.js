@@ -1,3 +1,7 @@
+const EXTRAS_DATA_VERSION = window.DATA_VERSION || document.currentScript?.src?.split("v=")[1] || Date.now();
+
+const extrasDataUrl = (path) => `${path}?v=${EXTRAS_DATA_VERSION}`;
+
 const extrasState = {
   reports: [],
   priceHistory: {},
@@ -565,8 +569,8 @@ function initChat() {
 
 async function bootExtras() {
   const [reportsResponse, priceResponse] = await Promise.all([
-    fetch("data/reports.json"),
-    fetch("data/price_history.json"),
+    fetch(extrasDataUrl("data/reports.json"), { cache: "no-store" }),
+    fetch(extrasDataUrl("data/price_history.json"), { cache: "no-store" }),
   ]);
   extrasState.reports = (await reportsResponse.json()).reports.sort((a, b) => b.id.localeCompare(a.id));
   extrasState.priceHistory = await priceResponse.json();

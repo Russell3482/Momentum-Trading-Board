@@ -3,6 +3,7 @@ from __future__ import annotations
 import csv
 import json
 import re
+from datetime import datetime, timezone
 from pathlib import Path
 
 
@@ -236,6 +237,7 @@ def load_price_history() -> dict[str, list[dict]]:
 def write_site_files(reports: list[dict]) -> None:
     SITE_DATA_DIR.mkdir(parents=True, exist_ok=True)
     reports = clean_legacy_value(reports)
+    build_version = datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S")
     (SITE_DATA_DIR / "reports.json").write_text(json.dumps({"reports": reports}, indent=2), encoding="utf-8")
     (SITE_DATA_DIR / "price_history.json").write_text(json.dumps(load_price_history(), indent=2), encoding="utf-8")
 
@@ -247,7 +249,7 @@ def write_site_files(reports: list[dict]) -> None:
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Momentum Trading Agent</title>
   <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v={build_version}">
 </head>
 <body>
   <main class="shell">
@@ -329,11 +331,11 @@ def write_site_files(reports: list[dict]) -> None:
       </section>
     </div>
   </main>
-  <script src="app.js"></script>
-  <script src="extras.js"></script>
+  <script src="app.js?v={build_version}"></script>
+  <script src="extras.js?v={build_version}"></script>
 </body>
 </html>
-""",
+""".format(build_version=build_version),
         encoding="utf-8",
     )
 
@@ -1347,8 +1349,11 @@ select {
         encoding="utf-8",
     )
 
-    (SITE_DIR / "app.js").write_text(
-        """const state = {
+    app_js = """const DATA_VERSION = "__BUILD_VERSION__";
+
+const dataUrl = (path) => `${path}?v=${DATA_VERSION}`;
+
+const state = {
   reports: [],
   activeId: "",
   category: "All",
@@ -1631,7 +1636,7 @@ function render() {
 }
 
 async function boot() {
-  const response = await fetch("data/reports.json");
+  const response = await fetch(dataUrl("data/reports.json"), { cache: "no-store" });
   const payload = await response.json();
   state.reports = payload.reports.sort((a, b) => b.id.localeCompare(a.id));
   setInitialReport();
@@ -1641,12 +1646,15 @@ async function boot() {
 boot().catch((error) => {
   document.body.innerHTML = `<main class="shell"><h1>Unable to load dashboard</h1><p>${error.message}</p></main>`;
 });
-""",
-        encoding="utf-8",
-    )
+"""
+    (SITE_DIR / "app.js").write_text(app_js.replace("__BUILD_VERSION__", build_version), encoding="utf-8")
 
     (SITE_DIR / "extras.js").write_text(
-        """const extrasState = {
+        """const EXTRAS_DATA_VERSION = window.DATA_VERSION || document.currentScript?.src?.split("v=")[1] || Date.now();
+
+const extrasDataUrl = (path) => `${path}?v=${EXTRAS_DATA_VERSION}`;
+
+const extrasState = {
   reports: [],
   priceHistory: {},
   activeTicker: "",
@@ -1974,8 +1982,8 @@ function initChat() {
 
 async function bootExtras() {
   const [reportsResponse, priceResponse] = await Promise.all([
-    fetch("data/reports.json"),
-    fetch("data/price_history.json"),
+    fetch(extrasDataUrl("data/reports.json"), { cache: "no-store" }),
+    fetch(extrasDataUrl("data/price_history.json"), { cache: "no-store" }),
   ]);
   extrasState.reports = (await reportsResponse.json()).reports.sort((a, b) => b.id.localeCompare(a.id));
   extrasState.priceHistory = await priceResponse.json();
