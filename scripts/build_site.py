@@ -146,6 +146,9 @@ def load_report(snapshot_path: Path) -> dict:
         enriched["entry_risk_score"] = score.get("entry_risk_score", score.get("risk_score", 0))
         enriched["trend_gate"] = bool(score.get("trend_gate", (score.get("trend_score") or 0) == 30))
         enriched["trend_signal"] = score.get("trend_signal", "Pass" if enriched["trend_gate"] else "Fail")
+        enriched["setup_trend_signal"] = score.get("setup_trend_signal", enriched["trend_signal"])
+        enriched["live_status"] = score.get("live_status", "Data Missing")
+        enriched["live_pivot_gap_pct"] = as_percent(score.get("live_pivot_gap_pct"))
         enriched["trend_age"] = score.get("trend_age", 0)
         enriched["trend_phase"] = score.get("trend_phase", "Data Missing")
         enriched["short_ma_state"] = score.get("short_ma_state", "Data Missing")
@@ -201,7 +204,7 @@ def load_report(snapshot_path: Path) -> dict:
     }
 
 
-def load_price_history() -> dict[str, list[dict]]:
+def load_price_history(cutoff_date: str | None = None) -> dict[str, list[dict]]:
     histories = {}
     for path in sorted((DATA_DIR / "prices").glob("*.csv")):
         ticker = path.stem
@@ -222,6 +225,8 @@ def load_price_history() -> dict[str, list[dict]]:
                     )
                 except (KeyError, TypeError, ValueError):
                     continue
+        if cutoff_date:
+            rows = [row for row in rows if row["date"] <= cutoff_date]
         for period in (5, 10, 20, 50, 150, 200):
             key = f"ma{period}"
             for idx, item in enumerate(rows):
@@ -238,8 +243,9 @@ def write_site_files(reports: list[dict]) -> None:
     SITE_DATA_DIR.mkdir(parents=True, exist_ok=True)
     reports = clean_legacy_value(reports)
     build_version = datetime.now(timezone.utc).strftime("%Y%m%d%H%M%S")
+    latest_chart_date = reports[0]["date"] if reports else None
     (SITE_DATA_DIR / "reports.json").write_text(json.dumps({"reports": reports}, indent=2), encoding="utf-8")
-    (SITE_DATA_DIR / "price_history.json").write_text(json.dumps(load_price_history(), indent=2), encoding="utf-8")
+    (SITE_DATA_DIR / "price_history.json").write_text(json.dumps(load_price_history(latest_chart_date), indent=2), encoding="utf-8")
 
     (SITE_DIR / "index.html").write_text(
         """<!doctype html>
@@ -323,7 +329,7 @@ def write_site_files(reports: list[dict]) -> None:
             </select>
             <button class="sort-btn active" id="btnSortDays" type="button">Days↓</button>
             <button class="sort-btn" id="btnSortPivot" type="button">Pivot↓</button>
-            <button class="sort-btn" id="btnOnlyConfirmed" type="button">Trend Pass</button>
+            <button class="sort-btn" id="btnOnlyConfirmed" type="button">Long Trend</button>
             <div class="count-badge">Show <span id="countDisplay">0</span></div>
           </div>
         </div>
@@ -1488,11 +1494,21 @@ function renderFocus(report) {
 const toneFor = (value = "") => {
   const text = String(value).toLowerCase();
   if (text === "intact" || text.includes("stack intact")) return "positive";
+  if (text.includes("healthy")) return "positive";
+  if (text.includes("broken")) return "danger";
   if (text.includes("not expanded")) return "warning";
   if (text.includes("pass") || text.includes("bullish") || text.includes("confirmed") || text.includes("expansion")) return "positive";
   if (text.includes("watch") || text.includes("neutral") || text.includes("entangled")) return "warning";
   if (text.includes("fail") || text.includes("repair") || text.includes("weak") || text.includes("break")) return "danger";
   return "";
+};
+
+const setupBadgeClass = (value = "") => {
+  const tone = toneFor(value);
+  if (tone === "positive") return "hot";
+  if (tone === "danger") return "danger";
+  if (tone === "warning") return "watch";
+  return "base";
 };
 
 const gainText = (value) => {
@@ -1555,7 +1571,7 @@ function renderWatchlist(report) {
       <div class="stock-top">
         <div>
           <div class="ticker">${item.ticker}</div>
-          <span class="badge ${item.trend_signal === "Pass" ? "hot" : "danger"}">Trend ${item.trend_signal}</span>
+          <span class="badge ${setupBadgeClass(item.setup_trend_signal)}">${item.setup_trend_signal}</span>
         </div>
         <div class="card-badges">
           <span class="badge badge-days">${item.ma_expansion_age || 0}d</span>
@@ -1594,7 +1610,10 @@ function renderWatchlist(report) {
         </div>
       </div>
       <div class="chart-metric-row">
-        <div class="metric-box ${toneFor(item.trend_signal)}"><span>Trend</span><b>${item.trend_signal}</b></div>
+        <div class="metric-box ${toneFor(item.setup_trend_signal)}"><span>Setup Trend</span><b>${item.setup_trend_signal}</b></div>
+        <div class="metric-box ${toneFor(item.trend_signal)}"><span>Long Trend Gate</span><b>${item.trend_signal}</b></div>
+        <div class="metric-box ${toneFor(item.live_status)}"><span>Live Status</span><b>${item.live_status}</b></div>
+        <div class="metric-box ${Number(item.live_pivot_gap_pct || 0) >= 0 ? "positive" : "warning"}"><span>Live Pivot Gap</span><b>${fmtPct(item.live_pivot_gap_pct)}</b></div>
         <div class="metric-box ${toneFor(item.expma_state)}"><span>EMA Expansion</span><b>${item.expma_state}</b></div>
         <div class="metric-box"><span>EXPMA Days</span><b>${item.expma_stack_age}d</b></div>
         <div class="metric-box ${toneFor(item.expma_break_state)}"><span>EMA Break</span><b>${item.expma_break_state}${item.expma_break_date ? ` ${item.expma_break_date}` : ""}</b></div>

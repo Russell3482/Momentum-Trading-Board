@@ -1,4 +1,4 @@
-const DATA_VERSION = "20260702125447";
+const DATA_VERSION = "20260702140053";
 
 const dataUrl = (path) => `${path}?v=${DATA_VERSION}`;
 
@@ -137,11 +137,21 @@ function renderFocus(report) {
 const toneFor = (value = "") => {
   const text = String(value).toLowerCase();
   if (text === "intact" || text.includes("stack intact")) return "positive";
+  if (text.includes("healthy")) return "positive";
+  if (text.includes("broken")) return "danger";
   if (text.includes("not expanded")) return "warning";
   if (text.includes("pass") || text.includes("bullish") || text.includes("confirmed") || text.includes("expansion")) return "positive";
   if (text.includes("watch") || text.includes("neutral") || text.includes("entangled")) return "warning";
   if (text.includes("fail") || text.includes("repair") || text.includes("weak") || text.includes("break")) return "danger";
   return "";
+};
+
+const setupBadgeClass = (value = "") => {
+  const tone = toneFor(value);
+  if (tone === "positive") return "hot";
+  if (tone === "danger") return "danger";
+  if (tone === "warning") return "watch";
+  return "base";
 };
 
 const gainText = (value) => {
@@ -204,7 +214,7 @@ function renderWatchlist(report) {
       <div class="stock-top">
         <div>
           <div class="ticker">${item.ticker}</div>
-          <span class="badge ${item.trend_signal === "Pass" ? "hot" : "danger"}">Trend ${item.trend_signal}</span>
+          <span class="badge ${setupBadgeClass(item.setup_trend_signal)}">${item.setup_trend_signal}</span>
         </div>
         <div class="card-badges">
           <span class="badge badge-days">${item.ma_expansion_age || 0}d</span>
@@ -243,7 +253,10 @@ function renderWatchlist(report) {
         </div>
       </div>
       <div class="chart-metric-row">
-        <div class="metric-box ${toneFor(item.trend_signal)}"><span>Trend</span><b>${item.trend_signal}</b></div>
+        <div class="metric-box ${toneFor(item.setup_trend_signal)}"><span>Setup Trend</span><b>${item.setup_trend_signal}</b></div>
+        <div class="metric-box ${toneFor(item.trend_signal)}"><span>Long Trend Gate</span><b>${item.trend_signal}</b></div>
+        <div class="metric-box ${toneFor(item.live_status)}"><span>Live Status</span><b>${item.live_status}</b></div>
+        <div class="metric-box ${Number(item.live_pivot_gap_pct || 0) >= 0 ? "positive" : "warning"}"><span>Live Pivot Gap</span><b>${fmtPct(item.live_pivot_gap_pct)}</b></div>
         <div class="metric-box ${toneFor(item.expma_state)}"><span>EMA Expansion</span><b>${item.expma_state}</b></div>
         <div class="metric-box"><span>EXPMA Days</span><b>${item.expma_stack_age}d</b></div>
         <div class="metric-box ${toneFor(item.expma_break_state)}"><span>EMA Break</span><b>${item.expma_break_state}${item.expma_break_date ? ` ${item.expma_break_date}` : ""}</b></div>

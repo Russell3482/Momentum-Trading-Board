@@ -97,6 +97,9 @@ class Analysis:
     volume_state: str
     tightness_state: str
     trend_signal: str
+    setup_trend_signal: str
+    live_status: str
+    live_pivot_gap_pct: float | None
     trend_score: int
     rs_score: int
     setup_score: int
@@ -121,11 +124,22 @@ def flatten_columns(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
+def cached_history(ticker: str) -> pd.DataFrame:
+    path = PRICE_DIR / f"{ticker}.csv"
+    if not path.exists():
+        return pd.DataFrame()
+    df = pd.read_csv(path, parse_dates=["Date"], index_col="Date")
+    return df.dropna(subset=["Close"]) if "Close" in df.columns else pd.DataFrame()
+
+
 def fetch_history(ticker: str, period: str = "2y") -> pd.DataFrame:
-    df = yf.download(ticker, period=period, interval="1d", auto_adjust=False, progress=False)
+    try:
+        df = yf.download(ticker, period=period, interval="1d", auto_adjust=False, progress=False)
+    except Exception:
+        return cached_history(ticker)
     df = flatten_columns(df)
     if df.empty:
-        return df
+        return cached_history(ticker)
     df.index = pd.to_datetime(df.index)
     df = df.dropna(subset=["Close"])
     df.to_csv(PRICE_DIR / f"{ticker}.csv")
@@ -661,6 +675,20 @@ def classify_status(price: float | None, pivot: float | None, support: float | N
     return "Developing Setup"
 
 
+def setup_trend_signal(status: str, trend_gate: bool, ma_state: str, ma_break_state: str, expma_state: str, short_state: str) -> str:
+    if status in {"Structure Break", "Trend Break"} or not trend_gate:
+        return "Broken"
+    if status == "Early Warning" or ma_break_state == "New Break":
+        return "Repair Watch"
+    if "Bullish Expansion" in ma_state and "Bullish Expansion" in expma_state and short_state in {"Bullish Expansion", "Constructive"}:
+        return "Healthy"
+    if "Pullback Watch" in expma_state or short_state in {"Pullback Watch", "Short-Term Weakening"}:
+        return "Pullback Watch"
+    if "Not Expanded" in ma_state or "Not Expanded" in expma_state:
+        return "Repair Watch"
+    return "Developing"
+
+
 def completed_daily_history(raw_history: dict[str, pd.DataFrame], mode: str, now_ny: datetime) -> dict[str, pd.DataFrame]:
     if mode != "premarket":
         return raw_history
@@ -961,6 +989,9 @@ def analyze_ticker(
             volume_state="Data Missing",
             tightness_state="Data Missing",
             trend_signal="Data Missing",
+            setup_trend_signal="Data Missing",
+            live_status="Data Missing",
+            live_pivot_gap_pct=None,
             trend_score=0,
             rs_score=0,
             setup_score=0,
@@ -1011,8 +1042,12 @@ def analyze_ticker(
     entry_risk = entry_risk_score(price, pivot, support, ma20)
     total = setup + breakout + demand + entry_risk
     status = classify_status(price, pivot, support, ma20, ma50, trend_gate, total)
+    session_price = safe_float(session.get("price"))
+    live_status = classify_status(session_price, pivot, support, ma20, ma50, trend_gate, total) if session_price is not None else "Data Missing"
     extension_20 = distance_pct(price, ma20)
     pivot_gap = distance_pct(price, pivot)
+    live_pivot_gap = distance_pct(session_price, pivot)
+    setup_trend = setup_trend_signal(status, trend_gate, ma_expansion_state_value, ma_break_state, expma_state_value, short_state)
 
     if pivot is not None and price is not None:
         if price < pivot:
@@ -1058,7 +1093,7 @@ def analyze_ticker(
         pivot=pivot,
         support=support,
         support_basis=support_basis_text(),
-        session_price=safe_float(session.get("price")),
+        session_price=session_price,
         session_move_pct=safe_float(session.get("move_pct")),
         session_time=str(session.get("time", "Data Missing")),
         session_label=str(session.get("label", "Data Missing")),
@@ -1099,6 +1134,9 @@ def analyze_ticker(
         volume_state=str(contraction["volume_state"]),
         tightness_state=str(contraction["tightness_state"]),
         trend_signal="Pass" if trend_gate else "Fail",
+        setup_trend_signal=setup_trend,
+        live_status=live_status,
+        live_pivot_gap_pct=live_pivot_gap,
         trend_score=trend,
         rs_score=rs,
         setup_score=setup,
@@ -1216,7 +1254,10 @@ def build_report(mode: str) -> Path:
                 f"- 20D Max Volume: {fmt_num(item.max_volume_20)}",
                 f"- Volume vs 20D Max: {fmt_ratio(item.volume_vs_max_20)}",
                 f"- Relative Strength: 1W {fmt_pct(rel_1w)}, 1M {fmt_pct(rel_1m)}, 3M {fmt_pct(rel_3m)}",
-                f"- Trend Gate: {item.trend_signal}",
+                f"- Long Trend Gate: {item.trend_signal}",
+                f"- Setup Trend: {item.setup_trend_signal}",
+                f"- Live Status: {item.live_status}",
+                f"- Live Pivot Gap: {fmt_pct(item.live_pivot_gap_pct)}",
                 f"- Trend Age: {item.trend_age} trading days",
                 f"- Trend Phase: {item.trend_phase}",
                 f"- Short MA State: {item.short_ma_state}",
