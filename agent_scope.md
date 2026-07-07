@@ -80,6 +80,7 @@ Primary watchlist:
 - LITE
 - AVGO
 - CIEN
+- LABU
 
 Benchmark indexes:
 
@@ -475,6 +476,7 @@ Core:
 - LITE
 - AVGO
 - CIEN
+- LABU
 
 Benchmarks:
 

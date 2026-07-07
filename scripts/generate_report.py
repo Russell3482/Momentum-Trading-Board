@@ -30,6 +30,7 @@ WATCHLIST = [
     "LITE",
     "AVGO",
     "CIEN",
+    "LABU",
 ]
 
 BENCHMARKS = ["QQQ", "SOXX", "SMH"]
