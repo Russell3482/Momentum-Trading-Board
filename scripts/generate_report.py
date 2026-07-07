@@ -916,6 +916,64 @@ def core_attention(analyses: list[Analysis], raw_history: dict[str, pd.DataFrame
     return lines
 
 
+def guide_action(item: Analysis) -> str:
+    cat = category(item)
+    if cat == "Actionable Now":
+        return "Prepare Entry"
+    if cat == "Breakout Confirmed / Manage":
+        return "Manage Hold"
+    if cat == "Breakout Watch":
+        return "Watch Trigger"
+    if cat == "Constructive Base":
+        return "Wait"
+    if cat == "Developing Setup":
+        return "Observe"
+    if cat == "Repair Needed":
+        return "Repair Only"
+    return "No Action"
+
+
+def guide_stance(analyses: list[Analysis]) -> str:
+    cats = {category(item) for item in analyses}
+    if "Actionable Now" in cats or "Breakout Confirmed / Manage" in cats:
+        return "Attack / Manage"
+    if {"Breakout Watch", "Constructive Base", "Developing Setup"} & cats:
+        return "Watch"
+    return "Defend"
+
+
+def guide_reason(item: Analysis) -> str:
+    parts = [
+        f"Trend {item.trend_signal}",
+        item.trend_phase,
+        f"Pivot {fmt_pct(item.pivot_gap_pct)}",
+        f"Volume {item.volume_state}",
+        f"Tightness {item.tightness_state}",
+    ]
+    return " / ".join(part for part in parts if part and part != "Data Missing")
+
+
+def daily_guide_lines(analyses: list[Analysis]) -> list[str]:
+    sorted_items = sorted(analyses, key=lambda item: (category_rank(category(item)), -item.timing_score))
+    focus = sorted_items[:5]
+    actionable = sum(category(item) in {"Actionable Now", "Breakout Confirmed / Manage", "Breakout Watch"} for item in analyses)
+    repairs = sum(category(item) == "Repair Needed" for item in analyses)
+    lines = [
+        f"- Bias: {guide_stance(analyses)}",
+        f"- Actionable / watch count: {actionable}",
+        f"- Repair needed count: {repairs}",
+        "- Confirmation source: daily close and daily volume; pre/after-market prices are context only.",
+        "",
+        "| Ticker | Action | Setup | Trigger | Risk |",
+        "|---|---|---|---|---|",
+    ]
+    for item in focus:
+        lines.append(
+            f"| {item.ticker} | {guide_action(item)} | {guide_reason(item)} | {item.key_level} | {item.invalidation} |"
+        )
+    return lines
+
+
 def analyze_ticker(
     ticker: str,
     history: dict[str, pd.DataFrame],
@@ -1215,6 +1273,9 @@ def build_report(mode: str) -> Path:
         "",
         "## Today's Core Attention",
         *core_attention(analyses, raw_history, history),
+        "",
+        "## Daily Guide",
+        *daily_guide_lines(analyses),
         "",
         "## Classification",
     ]

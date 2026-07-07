@@ -279,6 +279,13 @@ def write_site_files(reports: list[dict]) -> None:
     <div class="view" id="homeView" hidden>
       <section class="panel">
         <div class="panel-head">
+          <h2>Daily Guide</h2>
+        </div>
+        <div class="daily-guide" id="dailyGuide"></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
           <h2>Core Attention</h2>
         </div>
         <ul class="attention-list" id="coreAttention"></ul>
@@ -688,6 +695,123 @@ select {
   border-radius: 6px;
   background: var(--surface-2);
   line-height: 1.45;
+}
+
+.daily-guide {
+  display: grid;
+  gap: 12px;
+}
+
+.guide-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.guide-card {
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-2);
+}
+
+.guide-card span {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.guide-card b {
+  display: block;
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+.guide-card.hot b {
+  color: var(--accent);
+}
+
+.guide-card.watch b {
+  color: var(--warn);
+}
+
+.guide-card.danger b {
+  color: var(--danger);
+}
+
+.guide-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.guide-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.guide-table th,
+.guide-table td {
+  padding: 10px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.guide-table th {
+  background: var(--surface-2);
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.guide-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.guide-action {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.guide-action.hot {
+  background: #e8f5ef;
+  color: var(--accent);
+}
+
+.guide-action.watch {
+  background: #fff4e6;
+  color: var(--warn);
+}
+
+.guide-action.danger {
+  background: #fdeeee;
+  color: var(--danger);
+}
+
+.guide-note {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.stale-warning {
+  border-color: #f0c36a;
+  background: #fff8e5;
+  color: #7a4b00;
 }
 
 .classification-grid, .focus-grid, .watchlist-grid {
@@ -1283,7 +1407,7 @@ select {
     font-size: 25px;
   }
 
-  .regime, .classification-grid, .focus-grid, .watchlist-grid {
+  .regime, .guide-summary, .classification-grid, .focus-grid, .watchlist-grid {
     grid-template-columns: 1fr;
   }
 
@@ -1410,8 +1534,20 @@ const fmtDate = (iso) => {
 
 const currentReport = () => state.reports.find((report) => report.id === state.activeId) || state.reports[0];
 
+const reportTime = (report) => {
+  const value = Date.parse(report?.generated_at_local || "");
+  return Number.isFinite(value) ? value : 0;
+};
+
+const reportDataAgeDays = (report) => {
+  if (!report?.date) return null;
+  const dataDate = new Date(`${report.date}T00:00:00`);
+  if (Number.isNaN(dataDate.getTime())) return null;
+  return Math.max(0, Math.floor((new Date() - dataDate) / 86400000));
+};
+
 function setInitialReport() {
-  const first = [...state.reports].sort((a, b) => new Date(b.generated_at_local) - new Date(a.generated_at_local))[0] || state.reports[0];
+  const first = [...state.reports].sort((a, b) => reportTime(b) - reportTime(a))[0] || state.reports[0];
   state.activeId = first?.id || "";
 }
 
@@ -1419,7 +1555,12 @@ function renderTabs() {
   const report = currentReport();
   const el = document.querySelector("#latestContext");
   if (!el || !report) return;
-  el.textContent = `Latest update: ${report.date} / generated ${fmtDate(report.generated_at_local)}`;
+  const age = reportDataAgeDays(report);
+  const stale = age !== null && age >= 3;
+  el.classList.toggle("stale-warning", stale);
+  el.textContent = stale
+    ? `Data may be stale: latest report data date ${report.date} (${age} days old), generated ${fmtDate(report.generated_at_local)}`
+    : `Latest update: ${report.date} / generated ${fmtDate(report.generated_at_local)}`;
 }
 
 function renderSelect() {
@@ -1433,6 +1574,92 @@ function renderSummary(report) {
 function renderAttention(report) {
   const items = report.core_attention?.length ? report.core_attention : ["No core attention items in this report."];
   document.querySelector("#coreAttention").innerHTML = items.map((item) => `<li>${item}</li>`).join("");
+}
+
+const guidePriority = (item) => {
+  const order = {
+    "Actionable Now": 0,
+    "Breakout Confirmed / Manage": 1,
+    "Breakout Watch": 2,
+    "Constructive Base": 3,
+    "Developing Setup": 4,
+    "Repair Needed": 5,
+    "Data Missing": 6,
+  };
+  return order[item.category] ?? 99;
+};
+
+const guideActionFor = (item) => {
+  if (item.category === "Actionable Now") return { label: "Prepare Entry", cls: "hot" };
+  if (item.category === "Breakout Confirmed / Manage") return { label: "Manage Hold", cls: "hot" };
+  if (item.category === "Breakout Watch") return { label: "Watch Trigger", cls: "watch" };
+  if (item.category === "Constructive Base") return { label: "Wait", cls: "watch" };
+  if (item.category === "Developing Setup") return { label: "Observe", cls: "watch" };
+  if (item.category === "Repair Needed") return { label: "Repair Only", cls: "danger" };
+  return { label: "No Action", cls: "danger" };
+};
+
+const guideStance = (report) => {
+  const counts = Object.fromEntries(categoryOrder.map((name) => [name, report.scores.filter((item) => item.category === name).length]));
+  if (counts["Actionable Now"] || counts["Breakout Confirmed / Manage"]) return { label: "Attack / Manage", cls: "hot" };
+  if (counts["Breakout Watch"] || counts["Constructive Base"] || counts["Developing Setup"]) return { label: "Watch", cls: "watch" };
+  return { label: "Defend", cls: "danger" };
+};
+
+const guideReason = (item) => {
+  const parts = [
+    item.trend_signal ? `Trend ${item.trend_signal}` : "",
+    item.trend_phase || "",
+    `Pivot ${fmtPct(item.pivot_gap_pct)}`,
+    item.volume_state ? `Volume ${item.volume_state}` : "",
+    item.tightness_state ? `Tightness ${item.tightness_state}` : "",
+  ].filter(Boolean);
+  return parts.join(" · ");
+};
+
+function renderDailyGuide(report) {
+  const el = document.querySelector("#dailyGuide");
+  if (!el) return;
+  const stance = guideStance(report);
+  const age = reportDataAgeDays(report);
+  const focus = [...report.scores]
+    .sort((a, b) => guidePriority(a) - guidePriority(b) || (b.timing_score ?? 0) - (a.timing_score ?? 0))
+    .slice(0, 5);
+  const actionable = report.scores.filter((item) => ["Actionable Now", "Breakout Confirmed / Manage", "Breakout Watch"].includes(item.category)).length;
+  const repairs = report.scores.filter((item) => item.category === "Repair Needed").length;
+  const dataNote = age !== null && age >= 3
+    ? `Stale data warning: report date is ${report.date}, ${age} days behind the current calendar. Refresh before acting.`
+    : "Use daily close and volume as the confirmation source; pre/after-market prices are context only.";
+  el.innerHTML = `
+    <div class="guide-summary">
+      <div class="guide-card ${stance.cls}"><span>Bias</span><b>${stance.label}</b></div>
+      <div class="guide-card"><span>Actionable / Watch</span><b>${actionable}</b></div>
+      <div class="guide-card ${repairs ? "danger" : ""}"><span>Repair Needed</span><b>${repairs}</b></div>
+      <div class="guide-card ${age !== null && age >= 3 ? "danger" : ""}"><span>Data Age</span><b>${age === null ? "Unknown" : `${age}d`}</b></div>
+    </div>
+    <div class="guide-table-wrap">
+      <table class="guide-table">
+        <thead>
+          <tr><th>Ticker</th><th>Action</th><th>Setup</th><th>Trigger</th><th>Risk</th></tr>
+        </thead>
+        <tbody>
+          ${focus.map((item) => {
+            const action = guideActionFor(item);
+            return `
+              <tr>
+                <td><strong>${item.ticker}</strong><br><span class="badge ${badgeClass(item.category)}">${item.category}</span></td>
+                <td><span class="guide-action ${action.cls}">${action.label}</span></td>
+                <td>${guideReason(item)}</td>
+                <td>${item.key_level || "Data Missing"}</td>
+                <td>${item.invalidation || "Data Missing"}</td>
+              </tr>
+            `;
+          }).join("")}
+        </tbody>
+      </table>
+    </div>
+    <div class="guide-note">${dataNote}</div>
+  `;
 }
 
 function renderClassification(report) {
@@ -1647,6 +1874,7 @@ function render() {
   renderTabs();
   renderSelect();
   renderSummary(report);
+  renderDailyGuide(report);
   renderAttention(report);
   renderClassification(report);
   renderFocus(report);
@@ -1657,7 +1885,7 @@ function render() {
 async function boot() {
   const response = await fetch(dataUrl("data/reports.json"), { cache: "no-store" });
   const payload = await response.json();
-  state.reports = payload.reports.sort((a, b) => b.id.localeCompare(a.id));
+  state.reports = payload.reports.sort((a, b) => reportTime(b) - reportTime(a) || b.id.localeCompare(a.id));
   setInitialReport();
   render();
 }
@@ -2004,7 +2232,11 @@ async function bootExtras() {
     fetch(extrasDataUrl("data/reports.json"), { cache: "no-store" }),
     fetch(extrasDataUrl("data/price_history.json"), { cache: "no-store" }),
   ]);
-  extrasState.reports = (await reportsResponse.json()).reports.sort((a, b) => b.id.localeCompare(a.id));
+  extrasState.reports = (await reportsResponse.json()).reports.sort((a, b) => {
+    const at = Date.parse(a.generated_at_local || "") || 0;
+    const bt = Date.parse(b.generated_at_local || "") || 0;
+    return bt - at || b.id.localeCompare(a.id);
+  });
   extrasState.priceHistory = await priceResponse.json();
   initChartControl();
   renderChart();
@@ -2032,7 +2264,13 @@ bootExtras().catch((error) => {
 def main() -> None:
     snapshot_paths = sorted(DATA_DIR.glob("*_snapshot.json"))
     reports = [load_report(path) for path in snapshot_paths]
-    reports.sort(key=lambda item: item["id"], reverse=True)
+    reports.sort(
+        key=lambda item: (
+            item.get("generated_at_local") or "",
+            item.get("id") or "",
+        ),
+        reverse=True,
+    )
     write_site_files(reports)
     print(SITE_DIR / "index.html")
 
