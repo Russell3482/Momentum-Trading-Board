@@ -1,4 +1,4 @@
-const DATA_VERSION = "20261029171614";
+const DATA_VERSION = "20261030011749";
 
 const dataUrl = (path) => `${path}?v=${DATA_VERSION}`;
 
