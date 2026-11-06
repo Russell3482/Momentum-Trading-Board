@@ -1,0 +1,782 @@
+# Premarket Timing Report - 2026-11-05
+
+Generated: 2026-11-06 17:47 UTC / 2026-11-06 12:47 EST
+
+This is a research report only, not financial advice.
+Note: Generated after the regular-session open; treat this as a pre-market-format early-session report.
+
+## Market Regime
+- QQQ: 647.05 (below 20DMA, below 50DMA, below 200DMA)
+- SOXX: 131.90 (below 20DMA, below 50DMA, below 200DMA)
+- SMH: 447.73 (below 20DMA, below 50DMA, below 200DMA)
+
+## Today's Core Attention
+- Gap/early strength to monitor, not automatically confirm: LABU 6.1%, INTC 6.0%, AMD 8.2%, MXL 5.8%.
+- Repair needed: LABU, INTC, STM, AMD. Need trend/structure repair before becoming actionable.
+
+## Daily Guide
+- Bias: Defend
+- Actionable / watch count: 0
+- Repair needed count: 13
+- Confirmation source: daily close and daily volume; pre/after-market prices are context only.
+
+| Ticker | Action | Setup | Trigger | Risk |
+|---|---|---|---|---|
+| LABU | Repair Only | Trend Fail / No Trend / Pivot -39.0% / Volume Drying / Tightness Messy | Pivot 341.93; needs reclaim/hold above for confirmation | 196.56 |
+| INTC | Repair Only | Trend Fail / No Trend / Pivot -59.0% / Volume Mixed / Tightness Messy | Pivot 127.44; needs reclaim/hold above for confirmation | 56.77 |
+| STM | Repair Only | Trend Fail / No Trend / Pivot -32.6% / Volume Mixed / Tightness Messy | Pivot 59.29; needs reclaim/hold above for confirmation | 43.21 |
+| AMD | Repair Only | Trend Fail / No Trend / Pivot -38.6% / Volume Mixed / Tightness Messy | Pivot 658.52; needs reclaim/hold above for confirmation | 466.07 |
+| MU | Repair Only | Trend Fail / No Trend / Pivot -40.8% / Volume Mixed / Tightness Messy | Pivot 1108.72; needs reclaim/hold above for confirmation | 782.00 |
+
+## Classification
+- Repair Needed: LABU (37, Trend Break), INTC (16, Structure Break), STM (16, Structure Break), AMD (16, Structure Break), MU (16, Structure Break), NVDA (16, Structure Break), BE (16, Structure Break), TTMI (16, Structure Break), SNDK (16, Structure Break), MXL (16, Structure Break), LITE (16, Structure Break), AVGO (16, Structure Break), CIEN (16, Structure Break)
+
+## Focus Stock Analysis
+
+## Full Watchlist Detail
+
+### LABU
+- Price: 208.62
+- Session Price: 221.33
+- Session Move: 6.1%
+- Session Context: Regular session: 221.33 (6.1% vs prior close) at 2026-11-06 12:45 EST
+- Volume: 635,100 vs 20D avg 376,700
+- Volume vs 20D Avg: 1.69x
+- 20D Max Volume: 635,100
+- Volume vs 20D Max: 1.00x
+- Relative Strength: 1W -18.8%, 1M -8.4%, 3M -24.7%
+- Long Trend Gate: Fail
+- Setup Trend: Broken
+- Live Status: Trend Break
+- Live Pivot Gap: -35.3%
+- Trend Age: 0 trading days
+- Trend Phase: No Trend
+- Short MA State: Short-Term Weakening
+- Short MA Spread: 2.9%
+- MA Expansion State: MA Not Expanded
+- MA Expansion Start: Data Missing
+- MA Expansion Age: 0
+- MA Expansion Break: Not Expanded
+- MA Break Reason: MA5 <= MA10
+- MA Break Date: Data Missing
+- EXPMA State: EXPMA Not Expanded
+- EXPMA Spread: -5.3%
+- EXPMA Stack Age: 0
+- EXPMA Start: Data Missing
+- EXPMA Expansion Break: Not Expanded
+- EXPMA Break Reason: EMA5 <= EMA10
+- EXPMA Break Date: Data Missing
+- Gain EXPMA to MA: Data Missing
+- Gain MA to Now: Data Missing
+- Gain EXPMA to Now: Data Missing
+- Days Above 50DMA: 0
+- MA Stack Age: 244
+- Extension from 20DMA: -9.5%
+- Pivot Gap: -39.0%
+- Timing Score: 37/100
+- Setup Quality: 0/35
+- Breakout Readiness: 8/30
+- Volume / Demand: 20/20
+- Entry Risk: 9/15
+- Pullback Sequence: -20.0% / -20.2% / -14.9% / -22.6%
+- Pullback Volume Detail: -20.0% vol 1.98x avg20 / 1.50x prior | -20.2% vol 1.13x avg20 / 0.60x prior | -14.9% vol 0.82x avg20 / 0.74x prior | -22.6% vol 0.99x avg20 / 1.15x prior
+- VCP Volume State: Drying
+- Tightness: Messy
+- Pivot: 341.93
+- Support: 196.56
+- Support Basis: 20D low excluding latest bar
+- Status: Trend Break
+- Classification: Repair Needed
+- Current Session Context: Regular session: 221.33 (6.1% vs prior close) at 2026-11-06 12:45 EST
+- Key Level: Pivot 341.93; needs reclaim/hold above for confirmation
+- Invalidation Level: 196.56
+- Comment: Trend gate fail; No Trend; MA MA Not Expanded; short MA Short-Term Weakening; EXPMA EXPMA Not Expanded; -39.0% vs pivot; pullbacks -20.0% / -20.2% / -14.9% / -22.6%; volume Drying
+
+### INTC
+- Price: 52.25
+- Session Price: 55.37
+- Session Move: 6.0%
+- Session Context: Regular session: 55.37 (6.0% vs prior close) at 2026-11-06 12:45 EST
+- Volume: 267,415,600 vs 20D avg 138,887,270
+- Volume vs 20D Avg: 1.93x
+- 20D Max Volume: 455,599,400
+- Volume vs 20D Max: 0.59x
+- Relative Strength: 1W -43.2%, 1M -53.8%, 3M -48.6%
+- Long Trend Gate: Fail
+- Setup Trend: Broken
+- Live Status: Structure Break
+- Live Pivot Gap: -56.6%
+- Trend Age: 0 trading days
+- Trend Phase: No Trend
+- Short MA State: Short-Term Weakening
+- Short MA Spread: -30.6%
+- MA Expansion State: MA Not Expanded
+- MA Expansion Start: Data Missing
+- MA Expansion Age: 0
+- MA Expansion Break: Not Expanded
+- MA Break Reason: MA5 <= MA10
+- MA Break Date: Data Missing
+- EXPMA State: EXPMA Not Expanded
+- EXPMA Spread: -34.8%
+- EXPMA Stack Age: 0
+- EXPMA Start: Data Missing
+- EXPMA Expansion Break: Not Expanded
+- EXPMA Break Reason: EMA5 <= EMA10
+- EXPMA Break Date: Data Missing
+- Gain EXPMA to MA: Data Missing
+- Gain MA to Now: Data Missing
+- Gain EXPMA to Now: Data Missing
+- Days Above 50DMA: 0
+- MA Stack Age: 0
+- Extension from 20DMA: -38.9%
+- Pivot Gap: -59.0%
+- Timing Score: 16/100
+- Setup Quality: 0/35
+- Breakout Readiness: 8/30
+- Volume / Demand: 4/20
+- Entry Risk: 4/15
+- Pullback Sequence: -11.4% / -10.6% / -32.8% / -46.2%
+- Pullback Volume Detail: -11.4% vol 0.68x avg20 / 1.08x prior | -10.6% vol 0.75x avg20 / 0.83x prior | -32.8% vol 0.71x avg20 / 0.98x prior | -46.2% vol 1.55x avg20 / 2.23x prior
+- VCP Volume State: Mixed
+- Tightness: Messy
+- Pivot: 127.44
+- Support: 56.77
+- Support Basis: 20D low excluding latest bar
+- Status: Structure Break
+- Classification: Repair Needed
+- Current Session Context: Regular session: 55.37 (6.0% vs prior close) at 2026-11-06 12:45 EST
+- Key Level: Pivot 127.44; needs reclaim/hold above for confirmation
+- Invalidation Level: 56.77
+- Comment: Trend gate fail; No Trend; MA MA Not Expanded; short MA Short-Term Weakening; EXPMA EXPMA Not Expanded; -59.0% vs pivot; pullbacks -11.4% / -10.6% / -32.8% / -46.2%; volume Mixed
+
+### STM
+- Price: 39.95
+- Session Price: 41.40
+- Session Move: 3.6%
+- Session Context: Regular session: 41.40 (3.6% vs prior close) at 2026-11-06 12:45 EST
+- Volume: 22,628,400 vs 20D avg 11,265,165
+- Volume vs 20D Avg: 2.01x
+- 20D Max Volume: 22,628,400
+- Volume vs 20D Max: 1.00x
+- Relative Strength: 1W -20.1%, 1M -28.9%, 3M -28.8%
+- Long Trend Gate: Fail
+- Setup Trend: Broken
+- Live Status: Structure Break
+- Live Pivot Gap: -30.2%
+- Trend Age: 0 trading days
+- Trend Phase: No Trend
+- Short MA State: Short-Term Weakening
+- Short MA Spread: -2.8%
+- MA Expansion State: MA Not Expanded
+- MA Expansion Start: Data Missing
+- MA Expansion Age: 0
+- MA Expansion Break: Not Expanded
+- MA Break Reason: MA5 <= MA10
+- MA Break Date: Data Missing
+- EXPMA State: EXPMA Not Expanded
+- EXPMA Spread: -11.7%
+- EXPMA Stack Age: 0
+- EXPMA Start: Data Missing
+- EXPMA Expansion Break: Not Expanded
+- EXPMA Break Reason: EMA5 <= EMA10
+- EXPMA Break Date: Data Missing
+- Gain EXPMA to MA: Data Missing
+- Gain MA to Now: Data Missing
+- Gain EXPMA to Now: Data Missing
+- Days Above 50DMA: 0
+- MA Stack Age: 0
+- Extension from 20DMA: -14.8%
+- Pivot Gap: -32.6%
+- Timing Score: 16/100
+- Setup Quality: 0/35
+- Breakout Readiness: 8/30
+- Volume / Demand: 4/20
+- Entry Risk: 4/15
+- Pullback Sequence: -3.1% / -25.3% / -9.6% / -20.7%
+- Pullback Volume Detail: -3.1% vol 0.75x avg20 / 0.92x prior | -25.3% vol 0.85x avg20 / 0.96x prior | -9.6% vol 0.91x avg20 / 1.07x prior | -20.7% vol 1.28x avg20 / 1.30x prior
+- VCP Volume State: Mixed
+- Tightness: Messy
+- Pivot: 59.29
+- Support: 43.21
+- Support Basis: 20D low excluding latest bar
+- Status: Structure Break
+- Classification: Repair Needed
+- Current Session Context: Regular session: 41.40 (3.6% vs prior close) at 2026-11-06 12:45 EST
+- Key Level: Pivot 59.29; needs reclaim/hold above for confirmation
+- Invalidation Level: 43.21
+- Comment: Trend gate fail; No Trend; MA MA Not Expanded; short MA Short-Term Weakening; EXPMA EXPMA Not Expanded; -32.6% vs pivot; pullbacks -3.1% / -25.3% / -9.6% / -20.7%; volume Mixed
+
+### AMD
+- Price: 404.40
+- Session Price: 437.42
+- Session Move: 8.2%
+- Session Context: Regular session: 437.42 (8.2% vs prior close) at 2026-11-06 12:45 EST
+- Volume: 70,453,900 vs 20D avg 25,949,850
+- Volume vs 20D Avg: 2.72x
+- 20D Max Volume: 70,453,900
+- Volume vs 20D Max: 1.00x
+- Relative Strength: 1W -28.6%, 1M -37.4%, 3M -16.3%
+- Long Trend Gate: Fail
+- Setup Trend: Broken
+- Live Status: Structure Break
+- Live Pivot Gap: -33.6%
+- Trend Age: 0 trading days
+- Trend Phase: No Trend
+- Short MA State: Short-Term Weakening
+- Short MA Spread: -12.2%
+- MA Expansion State: MA Not Expanded
+- MA Expansion Start: Data Missing
+- MA Expansion Age: 0
+- MA Expansion Break: Not Expanded
+- MA Break Reason: MA5 <= MA10
+- MA Break Date: Data Missing
+- EXPMA State: EXPMA Not Expanded
+- EXPMA Spread: -12.2%
+- EXPMA Stack Age: 0
+- EXPMA Start: Data Missing
+- EXPMA Expansion Break: Not Expanded
+- EXPMA Break Reason: EMA5 <= EMA10
+- EXPMA Break Date: Data Missing
+- Gain EXPMA to MA: Data Missing
+- Gain MA to Now: Data Missing
+- Gain EXPMA to Now: Data Missing
+- Days Above 50DMA: 0
+- MA Stack Age: 136
+- Extension from 20DMA: -24.4%
+- Pivot Gap: -38.6%
+- Timing Score: 16/100
+- Setup Quality: 0/35
+- Breakout Readiness: 8/30
+- Volume / Demand: 4/20
+- Entry Risk: 4/15
+- Pullback Sequence: -6.7% / -20.3% / -9.7% / -30.6%
+- Pullback Volume Detail: -6.7% vol 0.77x avg20 / 0.82x prior | -20.3% vol 0.78x avg20 / 1.09x prior | -9.7% vol 0.89x avg20 / 1.15x prior | -30.6% vol 1.45x avg20 / 1.93x prior
+- VCP Volume State: Mixed
+- Tightness: Messy
+- Pivot: 658.52
+- Support: 466.07
+- Support Basis: 20D low excluding latest bar
+- Status: Structure Break
+- Classification: Repair Needed
+- Current Session Context: Regular session: 437.42 (8.2% vs prior close) at 2026-11-06 12:45 EST
+- Key Level: Pivot 658.52; needs reclaim/hold above for confirmation
+- Invalidation Level: 466.07
+- Comment: Trend gate fail; No Trend; MA MA Not Expanded; short MA Short-Term Weakening; EXPMA EXPMA Not Expanded; -38.6% vs pivot; pullbacks -6.7% / -20.3% / -9.7% / -30.6%; volume Mixed
+
+### MU
+- Price: 656.39
+- Session Price: 684.75
+- Session Move: 4.3%
+- Session Context: Regular session: 684.75 (4.3% vs prior close) at 2026-11-06 12:45 EST
+- Volume: 76,740,500 vs 20D avg 29,247,110
+- Volume vs 20D Avg: 2.62x
+- 20D Max Volume: 76,740,500
+- Volume vs 20D Max: 1.00x
+- Relative Strength: 1W -29.7%, 1M -39.7%, 3M -25.2%
+- Long Trend Gate: Fail
+- Setup Trend: Broken
+- Live Status: Structure Break
+- Live Pivot Gap: -38.2%
+- Trend Age: 0 trading days
+- Trend Phase: No Trend
+- Short MA State: Short-Term Weakening
+- Short MA Spread: -10.2%
+- MA Expansion State: MA Not Expanded
+- MA Expansion Start: Data Missing
+- MA Expansion Age: 0
+- MA Expansion Break: Not Expanded
+- MA Break Reason: MA5 <= MA10
+- MA Break Date: Data Missing
+- EXPMA State: EXPMA Not Expanded
+- EXPMA Spread: -15.8%
+- EXPMA Stack Age: 0
+- EXPMA Start: Data Missing
+- EXPMA Expansion Break: Not Expanded
+- EXPMA Break Reason: EMA5 <= EMA10
+- EXPMA Break Date: Data Missing
+- Gain EXPMA to MA: Data Missing
+- Gain MA to Now: Data Missing
+- Gain EXPMA to Now: Data Missing
+- Days Above 50DMA: 0
+- MA Stack Age: 302
+- Extension from 20DMA: -26.7%
+- Pivot Gap: -40.8%
+- Timing Score: 16/100
+- Setup Quality: 0/35
+- Breakout Readiness: 8/30
+- Volume / Demand: 4/20
+- Entry Risk: 4/15
+- Pullback Sequence: -8.7% / -21.2% / -8.5% / -34.3%
+- Pullback Volume Detail: -8.7% vol 0.84x avg20 / 0.88x prior | -21.2% vol 0.98x avg20 / 1.17x prior | -8.5% vol 0.91x avg20 / 0.98x prior | -34.3% vol 1.21x avg20 / 1.40x prior
+- VCP Volume State: Mixed
+- Tightness: Messy
+- Pivot: 1108.72
+- Support: 782.00
+- Support Basis: 20D low excluding latest bar
+- Status: Structure Break
+- Classification: Repair Needed
+- Current Session Context: Regular session: 684.75 (4.3% vs prior close) at 2026-11-06 12:45 EST
+- Key Level: Pivot 1108.72; needs reclaim/hold above for confirmation
+- Invalidation Level: 782.00
+- Comment: Trend gate fail; No Trend; MA MA Not Expanded; short MA Short-Term Weakening; EXPMA EXPMA Not Expanded; -40.8% vs pivot; pullbacks -8.7% / -21.2% / -8.5% / -34.3%; volume Mixed
+
+### NVDA
+- Price: 181.60
+- Session Price: 186.12
+- Session Move: 2.5%
+- Session Context: Regular session: 186.12 (2.5% vs prior close) at 2026-11-06 12:45 EST
+- Volume: 303,158,900 vs 20D avg 112,772,085
+- Volume vs 20D Avg: 2.69x
+- 20D Max Volume: 303,158,900
+- Volume vs 20D Max: 1.00x
+- Relative Strength: 1W -15.0%, 1M -23.5%, 3M -18.9%
+- Long Trend Gate: Fail
+- Setup Trend: Broken
+- Live Status: Structure Break
+- Live Pivot Gap: -23.5%
+- Trend Age: 0 trading days
+- Trend Phase: No Trend
+- Short MA State: Short-Term Weakening
+- Short MA Spread: -6.9%
+- MA Expansion State: MA Not Expanded
+- MA Expansion Start: Data Missing
+- MA Expansion Age: 0
+- MA Expansion Break: Not Expanded
+- MA Break Reason: MA5 <= MA10
+- MA Break Date: Data Missing
+- EXPMA State: EXPMA Not Expanded
+- EXPMA Spread: -8.7%
+- EXPMA Stack Age: 0
+- EXPMA Start: Data Missing
+- EXPMA Expansion Break: Not Expanded
+- EXPMA Break Reason: EMA5 <= EMA10
+- EXPMA Break Date: Data Missing
+- Gain EXPMA to MA: Data Missing
+- Gain MA to Now: Data Missing
+- Gain EXPMA to Now: Data Missing
+- Days Above 50DMA: 0
+- MA Stack Age: 134
+- Extension from 20DMA: -15.0%
+- Pivot Gap: -25.4%
+- Timing Score: 16/100
+- Setup Quality: 0/35
+- Breakout Readiness: 8/30
+- Volume / Demand: 4/20
+- Entry Risk: 4/15
+- Pullback Sequence: -2.6% / -12.6% / -5.4% / -17.5%
+- Pullback Volume Detail: -2.6% vol 1.08x avg20 / 1.23x prior | -12.6% vol 0.88x avg20 / 0.84x prior | -5.4% vol 0.87x avg20 / 1.00x prior | -17.5% vol 1.27x avg20 / 1.53x prior
+- VCP Volume State: Mixed
+- Tightness: Messy
+- Pivot: 243.37
+- Support: 199.68
+- Support Basis: 20D low excluding latest bar
+- Status: Structure Break
+- Classification: Repair Needed
+- Current Session Context: Regular session: 186.12 (2.5% vs prior close) at 2026-11-06 12:45 EST
+- Key Level: Pivot 243.37; needs reclaim/hold above for confirmation
+- Invalidation Level: 199.68
+- Comment: Trend gate fail; No Trend; MA MA Not Expanded; short MA Short-Term Weakening; EXPMA EXPMA Not Expanded; -25.4% vs pivot; pullbacks -2.6% / -12.6% / -5.4% / -17.5%; volume Mixed
+
+### BE
+- Price: 167.52
+- Session Price: 171.61
+- Session Move: 2.4%
+- Session Context: Regular session: 171.61 (2.4% vs prior close) at 2026-11-06 12:45 EST
+- Volume: 37,102,400 vs 20D avg 17,317,460
+- Volume vs 20D Avg: 2.14x
+- 20D Max Volume: 37,102,400
+- Volume vs 20D Max: 1.00x
+- Relative Strength: 1W -24.6%, 1M -42.5%, 3M -23.6%
+- Long Trend Gate: Fail
+- Setup Trend: Broken
+- Live Status: Structure Break
+- Live Pivot Gap: -43.2%
+- Trend Age: 0 trading days
+- Trend Phase: No Trend
+- Short MA State: Short-Term Weakening
+- Short MA Spread: -11.9%
+- MA Expansion State: MA Not Expanded
+- MA Expansion Start: Data Missing
+- MA Expansion Age: 0
+- MA Expansion Break: Not Expanded
+- MA Break Reason: MA5 <= MA10
+- MA Break Date: Data Missing
+- EXPMA State: EXPMA Not Expanded
+- EXPMA Spread: -18.2%
+- EXPMA Stack Age: 0
+- EXPMA Start: Data Missing
+- EXPMA Expansion Break: Not Expanded
+- EXPMA Break Reason: EMA5 <= EMA10
+- EXPMA Break Date: Data Missing
+- Gain EXPMA to MA: Data Missing
+- Gain MA to Now: Data Missing
+- Gain EXPMA to Now: Data Missing
+- Days Above 50DMA: 0
+- MA Stack Age: 302
+- Extension from 20DMA: -24.8%
+- Pivot Gap: -44.6%
+- Timing Score: 16/100
+- Setup Quality: 0/35
+- Breakout Readiness: 8/30
+- Volume / Demand: 4/20
+- Entry Risk: 4/15
+- Pullback Sequence: -12.7% / -29.2% / -21.7% / -16.2%
+- Pullback Volume Detail: -12.7% vol 1.34x avg20 / 1.57x prior | -29.2% vol 0.76x avg20 / 0.95x prior | -21.7% vol 1.39x avg20 / 1.83x prior | -16.2% vol 0.77x avg20 / 0.66x prior
+- VCP Volume State: Mixed
+- Tightness: Messy
+- Pivot: 302.35
+- Support: 189.00
+- Support Basis: 20D low excluding latest bar
+- Status: Structure Break
+- Classification: Repair Needed
+- Current Session Context: Regular session: 171.61 (2.4% vs prior close) at 2026-11-06 12:45 EST
+- Key Level: Pivot 302.35; needs reclaim/hold above for confirmation
+- Invalidation Level: 189.00
+- Comment: Trend gate fail; No Trend; MA MA Not Expanded; short MA Short-Term Weakening; EXPMA EXPMA Not Expanded; -44.6% vs pivot; pullbacks -12.7% / -29.2% / -21.7% / -16.2%; volume Mixed
+
+### TTMI
+- Price: 62.22
+- Session Price: 63.90
+- Session Move: 2.7%
+- Session Context: Regular session: 63.90 (2.7% vs prior close) at 2026-11-06 12:47 EST
+- Volume: 9,726,100 vs 20D avg 5,658,605
+- Volume vs 20D Avg: 1.72x
+- 20D Max Volume: 17,484,300
+- Volume vs 20D Max: 0.56x
+- Relative Strength: 1W -29.0%, 1M -51.5%, 3M -54.7%
+- Long Trend Gate: Fail
+- Setup Trend: Broken
+- Live Status: Structure Break
+- Live Pivot Gap: -56.2%
+- Trend Age: 0 trading days
+- Trend Phase: No Trend
+- Short MA State: Short-Term Weakening
+- Short MA Spread: -17.4%
+- MA Expansion State: MA Not Expanded
+- MA Expansion Start: Data Missing
+- MA Expansion Age: 0
+- MA Expansion Break: Not Expanded
+- MA Break Reason: MA5 <= MA10
+- MA Break Date: Data Missing
+- EXPMA State: EXPMA Not Expanded
+- EXPMA Spread: -32.7%
+- EXPMA Stack Age: 0
+- EXPMA Start: Data Missing
+- EXPMA Expansion Break: Not Expanded
+- EXPMA Break Reason: EMA5 <= EMA10
+- EXPMA Break Date: Data Missing
+- Gain EXPMA to MA: Data Missing
+- Gain MA to Now: Data Missing
+- Gain EXPMA to Now: Data Missing
+- Days Above 50DMA: 0
+- MA Stack Age: 0
+- Extension from 20DMA: -31.8%
+- Pivot Gap: -57.3%
+- Timing Score: 16/100
+- Setup Quality: 0/35
+- Breakout Readiness: 8/30
+- Volume / Demand: 4/20
+- Entry Risk: 4/15
+- Pullback Sequence: -9.4% / -33.2% / -30.1% / -36.0%
+- Pullback Volume Detail: -9.4% vol 0.31x avg20 / 0.95x prior | -33.2% vol 0.58x avg20 / 1.65x prior | -30.1% vol 1.95x avg20 / 3.11x prior | -36.0% vol 0.93x avg20 / 0.68x prior
+- VCP Volume State: Mixed
+- Tightness: Messy
+- Pivot: 145.80
+- Support: 70.75
+- Support Basis: 20D low excluding latest bar
+- Status: Structure Break
+- Classification: Repair Needed
+- Current Session Context: Regular session: 63.90 (2.7% vs prior close) at 2026-11-06 12:47 EST
+- Key Level: Pivot 145.80; needs reclaim/hold above for confirmation
+- Invalidation Level: 70.75
+- Comment: Trend gate fail; No Trend; MA MA Not Expanded; short MA Short-Term Weakening; EXPMA EXPMA Not Expanded; -57.3% vs pivot; pullbacks -9.4% / -33.2% / -30.1% / -36.0%; volume Mixed
+
+### SNDK
+- Price: 806.43
+- Session Price: 825.21
+- Session Move: 2.3%
+- Session Context: Regular session: 825.21 (2.3% vs prior close) at 2026-11-06 12:45 EST
+- Volume: 30,103,400 vs 20D avg 10,133,845
+- Volume vs 20D Avg: 2.97x
+- 20D Max Volume: 30,103,400
+- Volume vs 20D Max: 1.00x
+- Relative Strength: 1W -39.4%, 1M -52.4%, 3M -33.5%
+- Long Trend Gate: Fail
+- Setup Trend: Broken
+- Live Status: Structure Break
+- Live Pivot Gap: -56.8%
+- Trend Age: 0 trading days
+- Trend Phase: No Trend
+- Short MA State: Short-Term Weakening
+- Short MA Spread: -19.3%
+- MA Expansion State: MA Not Expanded
+- MA Expansion Start: Data Missing
+- MA Expansion Age: 0
+- MA Expansion Break: Not Expanded
+- MA Break Reason: MA5 <= MA10
+- MA Break Date: Data Missing
+- EXPMA State: EXPMA Not Expanded
+- EXPMA Spread: -29.0%
+- EXPMA Stack Age: 0
+- EXPMA Start: Data Missing
+- EXPMA Expansion Break: Not Expanded
+- EXPMA Break Reason: EMA5 <= EMA10
+- EXPMA Break Date: Data Missing
+- Gain EXPMA to MA: Data Missing
+- Gain MA to Now: Data Missing
+- Gain EXPMA to Now: Data Missing
+- Days Above 50DMA: 0
+- MA Stack Age: 236
+- Extension from 20DMA: -37.4%
+- Pivot Gap: -57.8%
+- Timing Score: 16/100
+- Setup Quality: 0/35
+- Breakout Readiness: 8/30
+- Volume / Demand: 4/20
+- Entry Risk: 4/15
+- Pullback Sequence: -13.1% / -29.2% / -13.7% / -42.9%
+- Pullback Volume Detail: -13.1% vol 0.85x avg20 / 0.84x prior | -29.2% vol 0.83x avg20 / 1.05x prior | -13.7% vol 0.83x avg20 / 1.02x prior | -42.9% vol 1.35x avg20 / 1.70x prior
+- VCP Volume State: Mixed
+- Tightness: Messy
+- Pivot: 1909.48
+- Support: 1014.00
+- Support Basis: 20D low excluding latest bar
+- Status: Structure Break
+- Classification: Repair Needed
+- Current Session Context: Regular session: 825.21 (2.3% vs prior close) at 2026-11-06 12:45 EST
+- Key Level: Pivot 1909.48; needs reclaim/hold above for confirmation
+- Invalidation Level: 1014.00
+- Comment: Trend gate fail; No Trend; MA MA Not Expanded; short MA Short-Term Weakening; EXPMA EXPMA Not Expanded; -57.8% vs pivot; pullbacks -13.1% / -29.2% / -13.7% / -42.9%; volume Mixed
+
+### MXL
+- Price: 44.31
+- Session Price: 46.90
+- Session Move: 5.8%
+- Session Context: Regular session: 46.90 (5.8% vs prior close) at 2026-11-06 12:45 EST
+- Volume: 7,954,400 vs 20D avg 3,854,175
+- Volume vs 20D Avg: 2.06x
+- 20D Max Volume: 7,954,400
+- Volume vs 20D Max: 1.00x
+- Relative Strength: 1W -38.1%, 1M -58.7%, 3M -40.9%
+- Long Trend Gate: Fail
+- Setup Trend: Broken
+- Live Status: Structure Break
+- Live Pivot Gap: -58.5%
+- Trend Age: 0 trading days
+- Trend Phase: No Trend
+- Short MA State: Short-Term Weakening
+- Short MA Spread: -18.3%
+- MA Expansion State: MA Not Expanded
+- MA Expansion Start: Data Missing
+- MA Expansion Age: 0
+- MA Expansion Break: Not Expanded
+- MA Break Reason: MA5 <= MA10
+- MA Break Date: Data Missing
+- EXPMA State: EXPMA Not Expanded
+- EXPMA Spread: -24.5%
+- EXPMA Stack Age: 0
+- EXPMA Start: Data Missing
+- EXPMA Expansion Break: Not Expanded
+- EXPMA Break Reason: EMA5 <= EMA10
+- EXPMA Break Date: Data Missing
+- Gain EXPMA to MA: Data Missing
+- Gain MA to Now: Data Missing
+- Gain EXPMA to Now: Data Missing
+- Days Above 50DMA: 0
+- MA Stack Age: 247
+- Extension from 20DMA: -38.4%
+- Pivot Gap: -60.8%
+- Timing Score: 16/100
+- Setup Quality: 0/35
+- Breakout Readiness: 8/30
+- Volume / Demand: 4/20
+- Entry Risk: 4/15
+- Pullback Sequence: -10.4% / -38.0% / -27.8% / -42.7%
+- Pullback Volume Detail: -10.4% vol 0.91x avg20 / 1.11x prior | -38.0% vol 0.89x avg20 / 1.11x prior | -27.8% vol 1.18x avg20 / 1.34x prior | -42.7% vol 1.00x avg20 / 0.89x prior
+- VCP Volume State: Mixed
+- Tightness: Messy
+- Pivot: 113.13
+- Support: 55.13
+- Support Basis: 20D low excluding latest bar
+- Status: Structure Break
+- Classification: Repair Needed
+- Current Session Context: Regular session: 46.90 (5.8% vs prior close) at 2026-11-06 12:45 EST
+- Key Level: Pivot 113.13; needs reclaim/hold above for confirmation
+- Invalidation Level: 55.13
+- Comment: Trend gate fail; No Trend; MA MA Not Expanded; short MA Short-Term Weakening; EXPMA EXPMA Not Expanded; -60.8% vs pivot; pullbacks -10.4% / -38.0% / -27.8% / -42.7%; volume Mixed
+
+### LITE
+- Price: 509.70
+- Session Price: 523.04
+- Session Move: 2.6%
+- Session Context: Regular session: 523.04 (2.6% vs prior close) at 2026-11-06 12:45 EST
+- Volume: 9,929,500 vs 20D avg 6,529,925
+- Volume vs 20D Avg: 1.52x
+- 20D Max Volume: 15,343,000
+- Volume vs 20D Max: 0.65x
+- Relative Strength: 1W -44.6%, 1M -54.1%, 3M -42.7%
+- Long Trend Gate: Fail
+- Setup Trend: Broken
+- Live Status: Structure Break
+- Live Pivot Gap: -54.2%
+- Trend Age: 0 trading days
+- Trend Phase: No Trend
+- Short MA State: Short-Term Weakening
+- Short MA Spread: -19.2%
+- MA Expansion State: MA Not Expanded
+- MA Expansion Start: Data Missing
+- MA Expansion Age: 0
+- MA Expansion Break: Not Expanded
+- MA Break Reason: MA5 <= MA10
+- MA Break Date: Data Missing
+- EXPMA State: EXPMA Not Expanded
+- EXPMA Spread: -25.0%
+- EXPMA Stack Age: 0
+- EXPMA Start: Data Missing
+- EXPMA Expansion Break: Not Expanded
+- EXPMA Break Reason: EMA5 <= EMA10
+- EXPMA Break Date: Data Missing
+- Gain EXPMA to MA: Data Missing
+- Gain MA to Now: Data Missing
+- Gain EXPMA to Now: Data Missing
+- Days Above 50DMA: 0
+- MA Stack Age: 287
+- Extension from 20DMA: -38.4%
+- Pivot Gap: -55.4%
+- Timing Score: 16/100
+- Setup Quality: 0/35
+- Breakout Readiness: 8/30
+- Volume / Demand: 4/20
+- Entry Risk: 4/15
+- Pullback Sequence: -9.7% / -31.3% / -16.3% / -48.2%
+- Pullback Volume Detail: -9.7% vol 0.64x avg20 / 0.93x prior | -31.3% vol 0.80x avg20 / 1.18x prior | -16.3% vol 0.71x avg20 / 0.91x prior | -48.2% vol 1.46x avg20 / 1.71x prior
+- VCP Volume State: Mixed
+- Tightness: Messy
+- Pivot: 1143.00
+- Support: 598.70
+- Support Basis: 20D low excluding latest bar
+- Status: Structure Break
+- Classification: Repair Needed
+- Current Session Context: Regular session: 523.04 (2.6% vs prior close) at 2026-11-06 12:45 EST
+- Key Level: Pivot 1143.00; needs reclaim/hold above for confirmation
+- Invalidation Level: 598.70
+- Comment: Trend gate fail; No Trend; MA MA Not Expanded; short MA Short-Term Weakening; EXPMA EXPMA Not Expanded; -55.4% vs pivot; pullbacks -9.7% / -31.3% / -16.3% / -48.2%; volume Mixed
+
+### AVGO
+- Price: 291.53
+- Session Price: 292.27
+- Session Move: 0.3%
+- Session Context: Regular session: 292.27 (0.3% vs prior close) at 2026-11-06 12:45 EST
+- Volume: 53,594,200 vs 20D avg 23,101,660
+- Volume vs 20D Avg: 2.32x
+- 20D Max Volume: 53,594,200
+- Volume vs 20D Max: 1.00x
+- Relative Strength: 1W -15.5%, 1M -22.6%, 3M -31.8%
+- Long Trend Gate: Fail
+- Setup Trend: Broken
+- Live Status: Structure Break
+- Live Pivot Gap: -31.5%
+- Trend Age: 0 trading days
+- Trend Phase: No Trend
+- Short MA State: Short-Term Weakening
+- Short MA Spread: -4.8%
+- MA Expansion State: MA Not Expanded
+- MA Expansion Start: Data Missing
+- MA Expansion Age: 0
+- MA Expansion Break: Not Expanded
+- MA Break Reason: MA5 <= MA10
+- MA Break Date: Data Missing
+- EXPMA State: EXPMA Not Expanded
+- EXPMA Spread: -9.9%
+- EXPMA Stack Age: 0
+- EXPMA Start: Data Missing
+- EXPMA Expansion Break: Not Expanded
+- EXPMA Break Reason: EMA5 <= EMA10
+- EXPMA Break Date: Data Missing
+- Gain EXPMA to MA: Data Missing
+- Gain MA to Now: Data Missing
+- Gain EXPMA to Now: Data Missing
+- Days Above 50DMA: 0
+- MA Stack Age: 0
+- Extension from 20DMA: -13.1%
+- Pivot Gap: -31.6%
+- Timing Score: 16/100
+- Setup Quality: 0/35
+- Breakout Readiness: 8/30
+- Volume / Demand: 4/20
+- Entry Risk: 4/15
+- Pullback Sequence: -5.1% / -13.7% / -6.1% / -9.4%
+- Pullback Volume Detail: -5.1% vol 0.92x avg20 / 1.04x prior | -13.7% vol 1.00x avg20 / 0.99x prior | -6.1% vol 0.83x avg20 / 0.88x prior | -9.4% vol 1.10x avg20 / 1.24x prior
+- VCP Volume State: Mixed
+- Tightness: Messy
+- Pivot: 426.50
+- Support: 319.30
+- Support Basis: 20D low excluding latest bar
+- Status: Structure Break
+- Classification: Repair Needed
+- Current Session Context: Regular session: 292.27 (0.3% vs prior close) at 2026-11-06 12:45 EST
+- Key Level: Pivot 426.50; needs reclaim/hold above for confirmation
+- Invalidation Level: 319.30
+- Comment: Trend gate fail; No Trend; MA MA Not Expanded; short MA Short-Term Weakening; EXPMA EXPMA Not Expanded; -31.6% vs pivot; pullbacks -5.1% / -13.7% / -6.1% / -9.4%; volume Mixed
+
+### CIEN
+- Price: 230.81
+- Session Price: 237.93
+- Session Move: 3.1%
+- Session Context: Regular session: 237.93 (3.1% vs prior close) at 2026-11-06 12:45 EST
+- Volume: 6,220,100 vs 20D avg 3,279,700
+- Volume vs 20D Avg: 1.90x
+- 20D Max Volume: 6,220,100
+- Volume vs 20D Max: 1.00x
+- Relative Strength: 1W -34.0%, 1M -48.3%, 3M -44.0%
+- Long Trend Gate: Fail
+- Setup Trend: Broken
+- Live Status: Structure Break
+- Live Pivot Gap: -48.6%
+- Trend Age: 0 trading days
+- Trend Phase: No Trend
+- Short MA State: Short-Term Weakening
+- Short MA Spread: -17.2%
+- MA Expansion State: MA Not Expanded
+- MA Expansion Start: Data Missing
+- MA Expansion Age: 0
+- MA Expansion Break: Not Expanded
+- MA Break Reason: MA5 <= MA10
+- MA Break Date: Data Missing
+- EXPMA State: EXPMA Not Expanded
+- EXPMA Spread: -23.4%
+- EXPMA Stack Age: 0
+- EXPMA Start: Data Missing
+- EXPMA Expansion Break: Not Expanded
+- EXPMA Break Reason: EMA5 <= EMA10
+- EXPMA Break Date: Data Missing
+- Gain EXPMA to MA: Data Missing
+- Gain MA to Now: Data Missing
+- Gain EXPMA to Now: Data Missing
+- Days Above 50DMA: 0
+- MA Stack Age: 0
+- Extension from 20DMA: -32.1%
+- Pivot Gap: -50.1%
+- Timing Score: 16/100
+- Setup Quality: 0/35
+- Breakout Readiness: 8/30
+- Volume / Demand: 4/20
+- Entry Risk: 4/15
+- Pullback Sequence: -9.9% / -27.7% / -13.9% / -38.7%
+- Pullback Volume Detail: -9.9% vol 0.56x avg20 / 0.52x prior | -27.7% vol 0.95x avg20 / 1.12x prior | -13.9% vol 0.91x avg20 / 0.96x prior | -38.7% vol 1.15x avg20 / 1.31x prior
+- VCP Volume State: Mixed
+- Tightness: Messy
+- Pivot: 462.69
+- Support: 268.67
+- Support Basis: 20D low excluding latest bar
+- Status: Structure Break
+- Classification: Repair Needed
+- Current Session Context: Regular session: 237.93 (3.1% vs prior close) at 2026-11-06 12:45 EST
+- Key Level: Pivot 462.69; needs reclaim/hold above for confirmation
+- Invalidation Level: 268.67
+- Comment: Trend gate fail; No Trend; MA MA Not Expanded; short MA Short-Term Weakening; EXPMA EXPMA Not Expanded; -50.1% vs pivot; pullbacks -9.9% / -27.7% / -13.9% / -38.7%; volume Mixed
+
+## Pre-Market Rules
+- Actionable Now requires timing quality plus a defined trigger; pre-market strength is context, not confirmation.
+- Daily close and daily volume remain the source of truth for confirmed signals.
+- Missing data must be marked as Data Missing.
